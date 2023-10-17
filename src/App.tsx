@@ -1,25 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-
-function App() {
+import { ReactElement, useState } from "react";
+import { Login } from "./Login";
+import { styled } from "styled-components";
+import { Credentials } from "./types";
+import { Welcome } from "./Welcome";
+import { Button } from "react-bootstrap";
+import { PageDisplay } from "./utils";
+function App(): ReactElement {
+  const [displayPage, setdisplayPage] = useState(PageDisplay.Login);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppStyling>
+      {displayPage === PageDisplay.Login && (
+        <Login
+          onLoginSuccess={() => {
+            setdisplayPage(PageDisplay.Welcome);
+          }}
+        />
+      )}
+      {displayPage === PageDisplay.Welcome && (
+        <Welcome
+          onLogout={() => {
+            setdisplayPage(PageDisplay.Login);
+          }}
+        />
+      )}
+    </AppStyling>
   );
 }
 
 export default App;
+
+const AppStyling = styled.div`
+  display: "flex";
+  flex-direction: ;
+`;
